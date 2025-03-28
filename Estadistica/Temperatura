@@ -1,0 +1,40 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+# Datos de temperatura (antes y después) basados en el RIQ proporcionado:
+# Antes (36 - 36.4), Después (36 - 36.4), Medianas: 36.25 → 36, p = 0.189
+temperatura_antes = [36.0, 36.05, 36.1, 36.2, 36.25, 36.3, 36.35, 36.4]
+
+temperatura_despues = [36.0, 36.0, 36.1, 36.2, 36.3, 36.35, 36.4, 36.45]
+
+# Crear el DataFrame
+df = pd.DataFrame({
+    'Temperatura': temperatura_antes + temperatura_despues,
+    'Momento': ['Antes'] * len(temperatura_antes) + ['Después'] * len(temperatura_despues)
+})
+
+# Crear el diagrama de cajas y bigotes
+plt.figure(figsize=(8, 6))
+sns.boxplot(x='Momento',
+            y='Temperatura',
+            data=df,
+            palette="Set3",
+            width=0.5,
+            fliersize=4,
+            linewidth=1.5)
+
+# Dibujar un recuadro similar a una leyenda personalizada
+plt.plot([], [], ' ', label='Mediana Antes: 36.25')
+plt.plot([], [], ' ', label='Mediana Después: 36')
+plt.plot([], [], ' ', label='Valor p = 0,189')
+plt.legend(title='Resumen', loc='best', frameon=True)
+
+# Personalización del gráfico
+plt.title('Comparación de Temperatura Corporal')
+plt.ylabel('Temperatura (°C)')
+plt.xlabel('Momento')
+plt.ylim(35.9, 36.6)
+plt.xlim(-0.5, 2)
+plt.tight_layout()
+plt.grid(axis='y', linestyle='--', alpha=0.6)
+plt.show()

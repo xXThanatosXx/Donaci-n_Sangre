@@ -1,0 +1,41 @@
+# Volver a importar las librerías después del reinicio del kernel
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# Datos de tensión arterial sistólica (antes y después) basados en el RIQ proporcionado:
+# Antes (110-120), Después (100-115), Medianas: 118 → 110, p = 0.003
+sistolica_antes = [110, 112, 115, 117, 118, 119, 120, 120]
+sistolica_despues = [100, 105, 108, 109, 110, 112, 113, 115]
+
+# Crear el DataFrame
+df = pd.DataFrame({
+    'Tensión Arterial Sistólica': sistolica_antes + sistolica_despues,
+    'Momento': ['Antes'] * len(sistolica_antes) + ['Después'] * len(sistolica_despues)
+})
+
+# Crear el diagrama de cajas y bigotes
+plt.figure(figsize=(8, 6))
+sns.boxplot(x='Momento',
+            y='Tensión Arterial Sistólica',
+            data=df,
+            palette="Set3",
+            width=0.5,
+            fliersize=4,
+            linewidth=1.5)
+
+# Dibujar un recuadro similar a una leyenda personalizada
+plt.plot([], [], ' ', label='Mediana Antes: 118')
+plt.plot([], [], ' ', label='Mediana Después: 110')
+plt.plot([], [], ' ', label='Valor p = 0,003')
+plt.legend(title='Resumen', loc='best', frameon=True)
+
+# Personalización del gráfico
+plt.title('Comparación de Tensión Arterial Sistólica')
+plt.ylabel('Tensión Arterial Sistólica (mmHg)')
+plt.xlabel('Momento')
+plt.ylim(95, 125)
+plt.xlim(-0.5, 2)
+plt.tight_layout()
+plt.grid(axis='y', linestyle='--', alpha=0.6)
+plt.show()
